@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><title>Cotizar entrega</title></head>
+<body>
+  <h1>Cotizar entrega</h1>
+  <label>Distancia (km): <input id="km" type="number" step="any"></label>
+  <label>Peso (kg): <input id="kg" type="number" step="any"></label>
+  <button id="boton">Cotizar</button>
+  <p id="resultado"></p>
+
+  <script>
+    document.getElementById("boton").addEventListener("click", async () => {
+      const km = document.getElementById("km").value;
+      const kg = document.getElementById("kg").value;
+      const salida = document.getElementById("resultado");
+      const resp = await fetch(`/entregas/cotizar/?km=${km}&kg=${kg}`);
+      const datos = await resp.json();
+      salida.textContent = resp.ok
+        ? `Medio: ${datos.medio}. Motivo: ${datos.motivo}`
+        : `Error: ${datos.error}`;
+    });
+  </script>
+</body>
+</html>
